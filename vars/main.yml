@@ -1,0 +1,5 @@
+---
+# vars file for provisioning/roles/gnome
+
+config_system_locale: 'fr_FR.UTF-8'
+config_system_language: 'en_US.UTF-8'

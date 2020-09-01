@@ -1,0 +1,24 @@
+---
+# tasks file for provisioning/roles/gnome
+
+- name: upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+
+- name: Install Gnome GUI
+  yum:
+    name: "@Server with GUI"
+    state: present
+
+- name: Get the default target mode
+  command: "systemctl get-default"
+  register: systemd_default
+
+- name: Set the default target mode to graphical
+  command: "systemctl set-default graphical"
+  when: systemd_default.stdout != "graphical.target"
+
+- name: Reboot the machine if systemd default changed
+  reboot:
+  when: systemd_default.stdout != "graphical.target"
